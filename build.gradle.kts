@@ -31,7 +31,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "pet"
+            packageName = "com.code.cube.pet"
             packageVersion = "1.0.0"
             macOS {
                 iconFile.set(project.file("assets/app_icon.icns"))

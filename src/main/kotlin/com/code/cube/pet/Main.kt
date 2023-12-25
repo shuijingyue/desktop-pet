@@ -55,10 +55,12 @@ fun main() = application {
     )
 
     Window(
+        title = "罗小黑",
         onCloseRequest = ::exitApplication,
         undecorated = true,
         resizable = false,
         transparent = true,
+        icon = icon
     ) {
         WindowDraggableArea {
                 LaunchedEffect(url) {
