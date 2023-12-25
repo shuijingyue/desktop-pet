@@ -10,6 +10,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Tray
 import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import org.jetbrains.compose.animatedimage.*
 
@@ -28,8 +29,8 @@ private val actions = mapOf(
     "贴贴" to "79f0f736afc37931f03c4b46ecc4b74543a9110d.gif",
     "切~" to "7a899e510fb30f2467e46253cf95d143ad4b0367.gif",
     "舔爪子" to "7af40ad162d9f2d3706be980aeec8a136327cc63.gif",
-    "睡觉" to "7dd98d1001e939015ce640517cec54e737d196fd.gif",
-    "生闷气" to "8c1001e93901213fc65683b353e736d12f2e957c.gif",
+    "(～ o ～)~zZ" to "7dd98d1001e939015ce640517cec54e737d196fd.gif",
+    "烦躁" to "8c1001e93901213fc65683b353e736d12f2e957c.gif",
     "趴着" to "a71ea8d3fd1f413465268b2e221f95cad1c85e49.gif",
     "抱枕" to "b999a9014c086e063d4ef22405087bf40bd1cbff.gif",
     "打点滴" to "e824b899a9014c083239a6f50d7b02087bf4f464.gif",
@@ -48,7 +49,6 @@ fun main() = application {
             for (entry in actions.entries) {
                 Item(entry.key, onClick = {
                     url = entry.value
-                    println(entry.value)
                 })
             }
         }
@@ -57,6 +57,7 @@ fun main() = application {
     Window(
         title = "罗小黑",
         onCloseRequest = ::exitApplication,
+        state = WindowState(width = 100.dp, height = 100.dp),
         undecorated = true,
         resizable = false,
         transparent = true,
