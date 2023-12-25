@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.window.WindowDraggableArea
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.loadSvgPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Tray
@@ -22,7 +23,6 @@ private sealed interface LoadState<T> {
 
 private val actions = mapOf(
     "喝水" to "023b5bb5c9ea15ce6fbb2d66b1003af33a87b20c.gif",
-    "跌倒" to "03087bf40ad162d991c2ec4c16dfa9ec8a13cdb6.gif",
     "啊~,我死了~" to "2cf5e0fe9925bc31c739ccf759df8db1cb13707d.gif",
     "打扫" to "37d3d539b6003af3673f110f322ac65c1138b6dc.gif",
     "求包养" to "4034970a304e251f2df62997a086c9177f3e5358.gif",
@@ -38,8 +38,8 @@ private val actions = mapOf(
 )
 
 fun main() = application {
-    val icon = painterResource("app_icon.png")
-    var url by remember { mutableStateOf("2cf5e0fe9925bc31c739ccf759df8db1cb13707d.gif") }
+    val icon = painterResource("app_icon.svg")
+    var url by remember { mutableStateOf("b999a9014c086e063d4ef22405087bf40bd1cbff.gif") }
     var state: LoadState<AnimatedImage>  by remember { mutableStateOf(LoadState.Loading()) }
 
     Tray(
