@@ -1,25 +1,17 @@
 package com.code.cube.pet
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.window.WindowDraggableArea
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.loadSvgPainter
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Tray
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.WindowState
-import androidx.compose.ui.window.application
+import androidx.compose.ui.window.*
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.animatedimage.*
-
-private sealed interface LoadState<T> {
-    class Loading<T> : LoadState<T>
-    data class Success<T>(val data: T) : LoadState<T>
-    data class Error<T>(val error: Exception) : LoadState<T>
-}
 
 private val actions = mapOf(
     "喝水" to "023b5bb5c9ea15ce6fbb2d66b1003af33a87b20c.gif",
@@ -38,9 +30,10 @@ private val actions = mapOf(
 )
 
 fun main() = application {
+
     val icon = painterResource("app_icon.svg")
-    var url by remember { mutableStateOf("b999a9014c086e063d4ef22405087bf40bd1cbff.gif") }
-    var state: LoadState<AnimatedImage>  by remember { mutableStateOf(LoadState.Loading()) }
+    var animatedImage: AnimatedImage? by remember { mutableStateOf(null) }
+    val coroutineScope = rememberCoroutineScope()
 
     Tray(
         icon = icon,
@@ -48,7 +41,14 @@ fun main() = application {
             Item("ヾ(￣▽￣)Bye~Bye~", onClick = ::exitApplication)
             for (entry in actions.entries) {
                 Item(entry.key, onClick = {
-                    url = entry.value
+                    coroutineScope.launch {
+                        animatedImage = null
+                        animatedImage = try {
+                            loadResourceAnimatedImage(entry.value)
+                        } catch (e: Exception) {
+                            null
+                        }
+                    }
                 })
             }
         }
@@ -57,29 +57,25 @@ fun main() = application {
     Window(
         title = "罗小黑",
         onCloseRequest = ::exitApplication,
-        state = WindowState(width = 100.dp, height = 100.dp),
+        state = WindowState(width = 100.dp, height = 100.dp, position = WindowPosition(Alignment.Center)),
         undecorated = true,
         resizable = false,
         transparent = true,
         icon = icon
     ) {
         WindowDraggableArea {
-                LaunchedEffect(url) {
-                    state = try {
-                        LoadState.Success(loadResourceAnimatedImage(url))
-                    } catch (e: Exception) {
-                        LoadState.Error(e)
-                    }
-                }
-
-                when (val animatedImage = state) {
-                    is LoadState.Success -> Image(
-                        bitmap = animatedImage.data.animate(),
-                        contentDescription = null,
-                        Modifier.size(100.dp)
-                    )
-                    else -> {}
+            LaunchedEffect(null) {
+                animatedImage = try {
+                    loadResourceAnimatedImage("b999a9014c086e063d4ef22405087bf40bd1cbff.gif")
+                } catch (e: Exception) {
+                    null
                 }
             }
+            Image(
+                bitmap = animatedImage?.animate() ?: ImageBitmap.Blank,
+                contentDescription = null,
+                Modifier.size(100.dp)
+            )
         }
     }
+}
