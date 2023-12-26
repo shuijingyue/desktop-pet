@@ -57,7 +57,7 @@ fun main() = application {
     Window(
         title = "罗小黑",
         onCloseRequest = ::exitApplication,
-        state = WindowState(width = 100.dp, height = 100.dp, position = WindowPosition(Alignment.Center)),
+        state = WindowState(width = 100.dp, height = 100.dp, position = WindowPosition(Alignment.TopEnd)),
         undecorated = true,
         resizable = false,
         transparent = true,
