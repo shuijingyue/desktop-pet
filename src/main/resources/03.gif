@@ -1,0 +1,10 @@
+const fs = require('fs')
+
+fs.readdir('./', (err, files) => {
+  files.forEach((it, idx) => {
+    fs.rename(it, `${idx}.gif`, (err) => {
+      if (err != null) console.log(`rename ${it} err`)
+      console.error(e)
+    })
+  })
+})
